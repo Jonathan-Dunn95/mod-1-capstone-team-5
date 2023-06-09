@@ -3,8 +3,6 @@ package com.techelevator;
 import com.techelevator.utilities.ErrorLog;
 import com.techelevator.utilities.TransactionLog;
 
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.Scanner;
 
 public class VendingMachineCLI {
@@ -17,12 +15,12 @@ public class VendingMachineCLI {
     private static final String MAIN_MENU_OPTION_PURCHASE = "Purchase";
     private static final String MAIN_MENU_OPTION_EXIT = "Exit M & J's Vending Machine";
 
-    private static final String PURCHASE_MENU_OPTION_DEPOSIT_MONEY = "Feed Money";
+    private static final String PURCHASE_MENU_OPTION_FEED_MONEY = "Feed Money";
     private static final String PURCHASE_MENU_OPTION_SELECT_ITEM = "Select Item";
     private static final String PURCHASE_MENU_OPTION_FINISH_TRANSACTION = "Finish Transaction";
 
     private static final String[] MAIN_MENU = {MAIN_MENU_OPTION_DISPLAY_ITEMS, MAIN_MENU_OPTION_PURCHASE, MAIN_MENU_OPTION_EXIT};
-    private static final String[] PURCHASE_MENU = {PURCHASE_MENU_OPTION_DEPOSIT_MONEY, PURCHASE_MENU_OPTION_SELECT_ITEM, PURCHASE_MENU_OPTION_FINISH_TRANSACTION};
+    private static final String[] PURCHASE_MENU = {PURCHASE_MENU_OPTION_FEED_MONEY, PURCHASE_MENU_OPTION_SELECT_ITEM, PURCHASE_MENU_OPTION_FINISH_TRANSACTION};
 
     private final ErrorLog mainLog = new ErrorLog();
     private final TransactionLog salesLog = new TransactionLog();
@@ -91,13 +89,13 @@ public class VendingMachineCLI {
                         runMenu = false;
                         break;
 
-                    case PURCHASE_MENU_OPTION_DEPOSIT_MONEY:
+                    case PURCHASE_MENU_OPTION_FEED_MONEY:
                         System.out.println("Current Balance: $" + wallet.getBalanceUser() + ".");
                         System.out.println("How Much Money (in whole dollar increments) Would You Like To Deposit?");
                         String lastDeposit = userInput.nextLine();
                         wallet.deposit(Integer.parseInt(lastDeposit));
-                        System.out.println("You Deposited: $" + lastDeposit + "." + "\nNew Balance: $" + wallet.getBalanceUser() + ".");
-                        salesLog.write(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS), PURCHASE_MENU_OPTION_DEPOSIT_MONEY, (Integer.parseInt(lastDeposit)), wallet.getBalance() / 100);
+                        System.out.println("You Deposited: $" + lastDeposit + ".00." + "\nNew Balance: $" + wallet.getBalanceUser() + ".");
+                        salesLog.write(PURCHASE_MENU_OPTION_FEED_MONEY, lastDeposit + ".00", wallet.getBalanceUser());
                         break;
 
                     case PURCHASE_MENU_OPTION_SELECT_ITEM:
@@ -118,18 +116,19 @@ public class VendingMachineCLI {
                         } else if (selectedItem.getItemQuantity() <= 0) {
                             System.out.println("SOLD OUT! How About A Different Item?");
                         } else {
-                            inv.getItemByCode(code).dispense();
+                            selectedItem.dispense();
                             wallet.deduct(selectedItem.getPennyPrice());
                             System.out.println("You've Purchased " + selectedItem.getItemName() + " For $" + selectedItem.getUserPrice() + ".");
                             System.out.println("Current Balance: $" + wallet.getBalanceUser() + ".");
+                            salesLog.write(selectedItem.getItemName(), selectedItem.getUserPrice(), wallet.getBalanceUser());
                         }
-                        // salesLog.write()
                         break;
+
                     case PURCHASE_MENU_OPTION_FINISH_TRANSACTION:
+                        salesLog.write("Dispense Change", wallet.getBalanceUser(), "0.00");
                         wallet.returnChange();
                         System.out.println("Current Balance: $" + wallet.getBalanceUser() + ".");
                         activeMenu = MAIN_MENU;
-                        // salesLog.write()
                         break;
 
                     default:

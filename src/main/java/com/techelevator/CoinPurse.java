@@ -26,10 +26,15 @@ public class CoinPurse {
         double dollarBalance = pennyBalance / 100.00;
         return String.format("%.2f", dollarBalance);
     }
+//
+//    public String amountToReturn() {
+//        return pennyBalance / 100;
+//    }
 
     public void returnChange() {
 
         // get a usable form of balance so we can subtract from it as we go
+        int amountReturned = getBalance();
         int remainingBalance = getBalance();
 
         // calculate amount of each coin denomination then subtract from remainingBalance
@@ -40,7 +45,6 @@ public class CoinPurse {
         remainingBalance %= 10;
 
         int numberOfNickels = remainingBalance / 5;
-        remainingBalance %= 5;
 
         // sout() coin delegations
         System.out.println("Returning: $" + getBalanceUser());
