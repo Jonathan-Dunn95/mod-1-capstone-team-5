@@ -94,6 +94,7 @@ public class VendingMachineCLI {
 						String lastDeposit = userInput.nextLine();
 						wallet.deposit(Integer.parseInt(lastDeposit));
 						System.out.println("You Deposited: $" + lastDeposit + "." + "\nNew Balance: $" + wallet.getBalanceUser() + ".");
+						// salesLog.write()
 						break;
 
 					case PURCHASE_MENU_OPTION_SELECT_ITEM:
@@ -119,11 +120,13 @@ public class VendingMachineCLI {
 							System.out.println("You've Purchased " + selectedItem.getItemName() + " For $" + selectedItem.getUserPrice() + ".");
 							System.out.println("Current Balance: $" + wallet.getBalanceUser() + ".");
 						}
+						// salesLog.write()
 						break;
 					case PURCHASE_MENU_OPTION_FINISH_TRANSACTION:
 						wallet.returnChange();
 						System.out.println("Current Balance: $" + wallet.getBalanceUser() + ".");
 						activeMenu = MAIN_MENU;
+						// salesLog.write()
 						break;
 
 					default:

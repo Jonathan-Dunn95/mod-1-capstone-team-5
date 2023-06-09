@@ -30,13 +30,30 @@ public class CoinPurse {
         return String.format("%.2f", dollarBalance);
     }
 
-    public Map<String, Integer> returnChange() {
-        // calculate # of quarters, dimes, nickels, pennies
+    public void returnChange() {
 
-        // reset balance
+        // get a usable form of balance so we can subtract from it as we go
+        int remainingBalance = getBalance();
 
-        // return a Map where <String, Integer> = <Coin Type, Quantity>
-        return null;
+        // calculate amount of each coin denomination then subtract from remainingBalance
+        int numberOfQuarters = remainingBalance / 25;
+        remainingBalance %= 25;
+
+        int numberOfDimes = remainingBalance / 10;
+        remainingBalance %= 10;
+
+        int numberOfNickels = remainingBalance / 5;
+        remainingBalance %= 5;
+
+        // sout() coin delegations
+        System.out.println("Returning: $" + getBalanceUser());
+        System.out.println("Dispensing: ");
+        System.out.println("Quarters: " + numberOfQuarters);
+        System.out.println("Dimes: " + numberOfDimes);
+        System.out.println("Nickels: " + numberOfNickels);
+
+        // set balance to 0
+        pennyBalance = 0;
     }
 
 }
