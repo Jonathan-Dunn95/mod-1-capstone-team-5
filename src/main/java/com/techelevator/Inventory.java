@@ -15,7 +15,11 @@ public class Inventory {
         return itemList;
     }
 
-    public void loader() {
+    public Inventory() {
+        loadInventory();
+    }
+
+    public void loadInventory() {
         // need to convert the String constant to a file
         File inventoryFile = new File(INVENTORY_SOURCE_FILE);
 

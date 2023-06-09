@@ -16,14 +16,15 @@ public class VendingMachineCLI {
 
 	private static final String PURCHASE_MENU_OPTION_DEPOSIT_MONEY = "Feed Money";
 	private static final String PURCHASE_MENU_OPTION_SELECT_ITEM = "Select Item";
-	private static final String PURCHASE_MENU_OPTION_RETURN_TO_MAIN = "Finish Transaction";
+	private static final String PURCHASE_MENU_OPTION_FINISH_TRANSACTION = "Finish Transaction";
 
 	private static final String[] MAIN_MENU = {MAIN_MENU_OPTION_DISPLAY_ITEMS, MAIN_MENU_OPTION_PURCHASE, MAIN_MENU_OPTION_EXIT};
-	private static final String[] PURCHASE_MENU = {PURCHASE_MENU_OPTION_DEPOSIT_MONEY, PURCHASE_MENU_OPTION_SELECT_ITEM, PURCHASE_MENU_OPTION_RETURN_TO_MAIN};
+	private static final String[] PURCHASE_MENU = {PURCHASE_MENU_OPTION_DEPOSIT_MONEY, PURCHASE_MENU_OPTION_SELECT_ITEM, PURCHASE_MENU_OPTION_FINISH_TRANSACTION};
 
 	private final ErrorLog mainLog = new ErrorLog();
 	private final TransactionLog salesLog = new TransactionLog();
 	private final CoinPurse wallet = new CoinPurse();
+	private final Inventory inv = new Inventory();
 
 	private Scanner userInput;
 
@@ -38,10 +39,6 @@ public class VendingMachineCLI {
 	}
 
 	public void run() {
-
-		// Need to load the inventory with fresh stock (5)
-		Inventory inv = new Inventory();
-		inv.loader();
 
 		System.out.println(BANNER_1 + "    Hello and Welcome to: \n            M & J\n       Vending Machine!" + BANNER_1);
 
@@ -123,7 +120,9 @@ public class VendingMachineCLI {
 							System.out.println("Current Balance: $" + wallet.getBalanceUser() + ".");
 						}
 						break;
-					case PURCHASE_MENU_OPTION_RETURN_TO_MAIN:
+					case PURCHASE_MENU_OPTION_FINISH_TRANSACTION:
+						wallet.returnChange();
+						System.out.println("Current Balance: $" + wallet.getBalanceUser() + ".");
 						activeMenu = MAIN_MENU;
 						break;
 

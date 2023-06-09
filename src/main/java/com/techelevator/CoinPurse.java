@@ -32,7 +32,9 @@ public class CoinPurse {
 
     public Map<String, Integer> returnChange() {
         // calculate # of quarters, dimes, nickels, pennies
+
         // reset balance
+
         // return a Map where <String, Integer> = <Coin Type, Quantity>
         return null;
     }

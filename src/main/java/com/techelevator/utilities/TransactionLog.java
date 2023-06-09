@@ -18,10 +18,10 @@ public class TransactionLog {
     // methods (verbs of the class)
     public void write(String event) {
 
-        // write to the logFile and append at the end to not overwrite prior events
+        // write to logFile and append so as to not overwrite previous entries
         try (PrintWriter writer = new PrintWriter(new FileOutputStream(logFile, true))) {
 
-            // writer writes the event then starts a new line
+            // writer writes the entry then starts a new line
             writer.write(event + "\n");
 
         } catch (Exception ex) {
