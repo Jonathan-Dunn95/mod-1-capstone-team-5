@@ -2,6 +2,9 @@ package com.techelevator;
 
 import com.techelevator.utilities.ErrorLog;
 import com.techelevator.utilities.TransactionLog;
+
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Scanner;
 
 public class VendingMachineCLI {
@@ -94,7 +97,7 @@ public class VendingMachineCLI {
 						String lastDeposit = userInput.nextLine();
 						wallet.deposit(Integer.parseInt(lastDeposit));
 						System.out.println("You Deposited: $" + lastDeposit + "." + "\nNew Balance: $" + wallet.getBalanceUser() + ".");
-						// salesLog.write()
+						salesLog.write(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS), PURCHASE_MENU_OPTION_DEPOSIT_MONEY, (Integer.parseInt(lastDeposit)), wallet.getBalance() / 100);
 						break;
 
 					case PURCHASE_MENU_OPTION_SELECT_ITEM:
