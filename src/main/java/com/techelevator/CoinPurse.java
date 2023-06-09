@@ -1,7 +1,4 @@
 package com.techelevator;
-
-import java.util.Map;
-
 public class CoinPurse {
 
     private int pennyBalance;
